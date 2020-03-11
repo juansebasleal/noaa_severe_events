@@ -1,0 +1,25 @@
+---
+title: "NOAA Analysis on Severe Events"
+author: "Sebastian Leal"
+date: "11/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Synopsis
+
+Data analysis on U.S. National Oceanic and Atmospheric Administration's
+Answering some questions about severe weather events
+so that the government or municipal manager can take actions
+TODO
+
+## Data Processing
+
+TODO
+
+## Results
+
+TODO
