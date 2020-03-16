@@ -18,7 +18,53 @@ TODO
 
 ## Data Processing
 
-TODO
+### Download data & uncompress data
+
+Include libraries:
+```{r include_libraries, message=FALSE, warning=FALSE}
+library(dplyr)
+library("ggplot2")
+```
+
+Download data:
+```{r}
+if (!file.exists("noaa_stormdata.csv.bz2")) {
+  download.file(
+    "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2",
+    "noaa_stormdata.csv.bz2"
+  )
+}
+data <- read.csv(bzfile("noaa_stormdata.csv.bz2"))
+str(data)
+
+```
+
+Summarize data before plotting it:
+
+```{r}
+top15Events <-
+  data %>%
+  group_by(EVTYPE) %>%
+  summarize(
+      totalFatalities = sum(FATALITIES, na.rm = TRUE),
+      totalInjuries = sum(INJURIES, na.rm = TRUE)
+  ) %>%
+  arrange(desc(totalFatalities), desc(totalInjuries)) %>%
+  top_n(15)
+```
+
+In this chart we see the top 15 most harmful events in USA. We see that tornados the most harmful one:
+
+```{r}
+ggplot(top15Events) +
+  geom_point(color = "red", mapping = aes(x = totalFatalities, y = EVTYPE)) +
+  geom_point(color = "blue", mapping = aes(x = totalInjuries, y = EVTYPE)) +
+  xlab("RED: Fatalities / BLUE: Injuries") +
+  ggtitle("Top 15 most harmful events")
+
+```
+
+
 
 ## Results
 
